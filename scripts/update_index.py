@@ -7,11 +7,16 @@ from collections import defaultdict
 ROOT=Path(__file__).resolve().parents[1]
 def relative(target,current):return quote(os.path.relpath(target,current.parent).replace('\\','/'),safe='/#')
 def clean(s):return str(s).replace('|','\\|').replace('\n',' ')
+def has_analysis(row):
+    text=(ROOT/row['path']).read_text(encoding='utf-8')
+    return bool(re.search(r'^## 论文解析\s*$',text,re.M))
 def write_table(path,title,intro,rows):
     path.parent.mkdir(parents=True,exist_ok=True)
-    lines=[f'# {title}','',intro,'','| 编号 | 论文 | 刊会 | 年份 |','| --- | --- | --- | --- |']
+    lines=[f'# {title}','',intro,'','| 编号 | 论文 | 刊会 | 年份 | 精读解析 |','| --- | --- | --- | --- | --- |']
     for r in sorted(rows,key=lambda x:(x['topic'],x['title'].lower())):
-        lines.append(f'| {r["arxiv_id"]} | [{clean(r["title"])}]({relative(ROOT/r["path"],path)}) | {clean(r["venue"])} | {r["year"] or "未注明"} |')
+        article=relative(ROOT/r['path'],path)
+        analysis=f'[阅读全文]({article}#论文解析)' if has_analysis(r) else '—'
+        lines.append(f'| {r["arxiv_id"]} | [{clean(r["title"])}]({article}) | {clean(r["venue"])} | {r["year"] or "未注明"} | {analysis} |')
     path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
 def refresh():
     with (ROOT/'catalog.csv').open(encoding='utf-8-sig',newline='') as f:rows=list(csv.DictReader(f))
@@ -25,6 +30,8 @@ def refresh():
         if p.relative_to(ROOT).parts[0]!=r['topic']:raise ValueError('Topic and path disagree')
         groups[r['topic']][p.parent.name].append(r)
     write_table(ROOT/'00_导航/全部论文.md','全部论文目录','按编号、题名、刊会检索。每个标题链接到唯一论文页，正文包含官方资料或论文解析。',rows)
+    analyses=[r for r in rows if has_analysis(r)]
+    write_table(ROOT/'00_导航/精读解析.md','精读解析','汇集方法原理、公式、实验与局限的中文精读解析。点击“阅读全文”可直接跳到正文；论文仍按研究主题和刊会归档。',analyses)
     venues=defaultdict(list)
     for r in rows:venues[r['venue']].append(r)
     vpage=ROOT/'00_导航/按刊会查找.md'
@@ -36,7 +43,7 @@ def refresh():
         write_table(vp,venue,'该刊会在不同研究主题下的论文。来源与发表信息核对范围见各论文页。',items)
     vpage.write_text('\n'.join(vl)+'\n',encoding='utf-8')
     home=['# 世界模型论文与解析','','收录世界模型及其相关表示学习、规划、控制与评测研究，按研究主题和刊会组织，提供论文资料与中文解析。','',
-    '## 论文导航','','- [全部论文目录](00_%E5%AF%BC%E8%88%AA/%E5%85%A8%E9%83%A8%E8%AE%BA%E6%96%87.md)','- [按刊会查找](00_%E5%AF%BC%E8%88%AA/%E6%8C%89%E5%88%8A%E4%BC%9A%E6%9F%A5%E6%89%BE.md)','- [基础知识与方法谱系](基础知识与方法谱系/README.md)','- [引用与资料核对说明](SOURCES.md)','- [内容维护指南](CONTRIBUTING.md)','',
+    '## 论文导航','','- [精读解析](00_%E5%AF%BC%E8%88%AA/%E7%B2%BE%E8%AF%BB%E8%A7%A3%E6%9E%90.md)：直接阅读方法、公式、实验与局限分析。','- [全部论文目录](00_%E5%AF%BC%E8%88%AA/%E5%85%A8%E9%83%A8%E8%AE%BA%E6%96%87.md)','- [按刊会查找](00_%E5%AF%BC%E8%88%AA/%E6%8C%89%E5%88%8A%E4%BC%9A%E6%9F%A5%E6%89%BE.md)','- [基础知识与方法谱系](基础知识与方法谱系/README.md)','- [引用与资料核对说明](SOURCES.md)','- [内容维护指南](CONTRIBUTING.md)','',
     '## 按研究主题查找','','| 研究主题 | 论文数 |','| --- | --- |']
     for topic,vs in sorted(groups.items()):
         items=[r for rs in vs.values() for r in rs]
@@ -48,7 +55,7 @@ def refresh():
             tl.append(f'| [{v}]({relative(vp,tp)}) | {len(rs)} |')
             write_table(vp,f'{topic} / {v}','论文题名链接至资料与解析，原文和版本信息见论文页。',rs)
         tp.write_text('\n'.join(tl)+'\n',encoding='utf-8')
-    home+=['','## 关于本库','',f'当前收录 {len(rows)} 篇论文，涵盖世界模型、表示学习、规划与控制、机器人操控及相关应用。可以从研究主题入手，也可以按刊会浏览或通过论文目录查找。','',
+    home+=['','## 关于本库','',f'当前收录 {len(rows)} 篇论文，提供 {len(analyses)} 篇中文精读解析，涵盖世界模型、表示学习、规划与控制、机器人操控及相关应用。可以从研究主题入手，也可以按刊会浏览或通过论文目录查找。','',
     '论文条目提供原文入口、作者、版本与发表信息；中文解析围绕研究问题、方法原理、关键实验与适用局限展开，帮助读者理解方法并联系相关工作。','',
     '欢迎通过 Issues 补充相关论文、讨论方法或指出资料错误。引用与版本信息见 [资料来源说明](SOURCES.md)，内容贡献方式见 [贡献指南](CONTRIBUTING.md)。']
     (ROOT/'README.md').write_text('\n'.join(home)+'\n',encoding='utf-8')
