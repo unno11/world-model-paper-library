@@ -48,9 +48,9 @@ def refresh():
             tl.append(f'| [{v}]({relative(vp,tp)}) | {len(rs)} |')
             write_table(vp,f'{topic} / {v}','论文题名链接至资料与解析，原文和版本信息见论文页。',rs)
         tp.write_text('\n'.join(tl)+'\n',encoding='utf-8')
-    home+=['','## 内容与来源','',f'当前收录 {len(rows)} 篇论文。题名、作者、版本等元数据按官方来源整理；每篇注明发表信息依据。刊会待核实条目和预印本单独归档，不将预印本视为正式接收。','',
-    '论文解析区分原文结论、分析与推断。论文实验数据不代表仓库维护者完成的复现实验。引用图示和第三方材料归原作者；不上传论文全文 PDF、个人学习进度或研究执行记录。','',
-    '日常新增内容更新论文页与 [catalog.csv](catalog.csv)，再运行 `python scripts/update_index.py` 刷新全部目录。']
+    home+=['','## 关于本库','',f'当前收录 {len(rows)} 篇论文，涵盖世界模型、表示学习、规划与控制、机器人操控及相关应用。可以从研究主题入手，也可以按刊会浏览或通过论文目录查找。','',
+    '论文条目提供原文入口、作者、版本与发表信息；中文解析围绕研究问题、方法原理、关键实验与适用局限展开，帮助读者理解方法并联系相关工作。','',
+    '欢迎通过 Issues 补充相关论文、讨论方法或指出资料错误。引用与版本信息见 [资料来源说明](SOURCES.md)，内容贡献方式见 [贡献指南](CONTRIBUTING.md)。']
     (ROOT/'README.md').write_text('\n'.join(home)+'\n',encoding='utf-8')
     basic=ROOT/'基础知识与方法谱系/README.md'
     basic.write_text('\n'.join(['# 基础知识与方法谱系','',*[f'- [{p.stem}]({relative(p,basic)})' for p in sorted(basic.parent.rglob('*.md')) if p!=basic],'']),encoding='utf-8')
