@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="#f8fafc"/><style>text{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#172033}.title{font-size:28px;font-weight:700}.h{font-size:22px;font-weight:700}.b{font-size:18px}.s{font-size:15px}.box{stroke:#334155;stroke-width:2;rx:14}.blue{fill:#dbeafe}.green{fill:#dcfce7}.orange{fill:#ffedd5}.purple{fill:#ede9fe}.gray{fill:#e2e8f0}.arrow{stroke:#475569;stroke-width:3;fill:none;marker-end:url(#a)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:7 6;fill:none;marker-end:url(#a)}</style>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#475569"/></marker></defs>
+<text x="40" y="48" class="title">GRASP：把长时域串行 rollout 改成可并行的“虚拟状态”优化</text>
+<text x="40" y="78" class="s">依据论文 Figure 2 重绘；虚线表示周期性同步，virtual state 不是环境真实状态，而是规划优化变量。</text>
+<rect x="40" y="110" width="520" height="530" class="box gray"/><text x="70" y="150" class="h">标准 GD / shooting</text>
+<rect x="75" y="205" width="150" height="70" class="box blue"/><text x="110" y="247" class="b">s₀ 起点</text>
+<rect x="285" y="205" width="150" height="70" class="box orange"/><text x="322" y="247" class="b">Fθ(sₜ,aₜ)</text>
+<rect x="285" y="345" width="150" height="70" class="box orange"/><text x="322" y="387" class="b">Fθ(sₜ₊₁,aₜ₊₁)</text>
+<rect x="285" y="485" width="150" height="70" class="box green"/><text x="322" y="527" class="b">sT 终点</text>
+<path d="M225 240H280" class="arrow"/><path d="M360 275V340" class="arrow"/><path d="M360 415V480" class="arrow"/><path d="M440 520H505" class="arrow"/>
+<text x="95" y="600" class="s">必须先完成 T 步串行预测，</text><text x="95" y="622" class="s">再从终点误差反传；长时域易梯度不稳。</text>
+<rect x="600" y="110" width="560" height="530" class="box purple"/><text x="630" y="150" class="h">GRASP lifted planning</text>
+<rect x="635" y="205" width="125" height="65" class="box blue"/><text x="675" y="244" class="b">s₀</text>
+<rect x="810" y="185" width="125" height="65" class="box orange"/><text x="845" y="224" class="b">ŝ₁</text>
+<rect x="980" y="185" width="125" height="65" class="box orange"/><text x="1015" y="224" class="b">ŝ₂</text>
+<rect x="810" y="355" width="125" height="65" class="box orange"/><text x="845" y="394" class="b">ŝₜ</text>
+<rect x="980" y="355" width="125" height="65" class="box green"/><text x="1015" y="394" class="b">g = sT</text>
+<path d="M760 237H805" class="arrow"/><path d="M935 217H975" class="arrow"/><path d="M935 385H975" class="arrow"/>
+<path d="M872 250V350" class="dash"/><path d="M1042 250V350" class="dash"/>
+<text x="655" y="475" class="b">并行计算：Fθ(ŝₜ,aₜ) →</text><text x="655" y="502" class="b">动态一致性 + 目标 shaping</text>
+<rect x="655" y="535" width="430" height="68" class="box green"/><text x="690" y="576" class="b">每 Ksync 次：真实 serial rollout + GD sync</text>
+</svg>

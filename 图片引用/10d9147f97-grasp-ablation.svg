@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="#fff"/><style>text{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#172033}.title{font-size:28px;font-weight:700}.h{font-size:21px;font-weight:700}.b{font-size:16px}.s{font-size:14px}.box{stroke:#334155;stroke-width:2;rx:12}.grid{stroke:#cbd5e1;stroke-width:1}</style>
+<text x="40" y="48" class="title">消融实验：三项机制共同作用，而不是单一技巧取胜</text><text x="40" y="76" class="s">依据论文 Table 2 重绘；Push-T，H=40，GD sync 每 100 个 stochastic steps。</text>
+<rect x="45" y="115" width="1110" height="540" class="box" fill="#f8fafc"/><text x="75" y="155" class="h">Accuracy (%) / median time (s)</text>
+<g class="grid"><line x1="90" y1="250" x2="1105" y2="250"/><line x1="90" y1="350" x2="1105" y2="350"/><line x1="90" y1="450" x2="1105" y2="450"/><line x1="90" y1="550" x2="1105" y2="550"/></g>
+<text x="70" y="555" class="s">0</text><text x="60" y="455" class="s">25</text><text x="60" y="355" class="s">50</text><text x="60" y="255" class="s">75</text><text x="55" y="205" class="s">100</text>
+<g fill="#2563eb"><rect x="130" y="314" width="48" height="236"/><rect x="270" y="357" width="48" height="193"/><rect x="410" y="330" width="48" height="220"/><rect x="550" y="314" width="48" height="236"/><rect x="690" y="331" width="48" height="219"/><rect x="830" y="314" width="48" height="236"/><rect x="970" y="314" width="48" height="236"/></g>
+<g class="s"><text x="134" y="580">No sync</text><text x="274" y="580">10 sync</text><text x="414" y="580">50 sync</text><text x="550" y="580">σ=0</text><text x="680" y="580">σ=1</text><text x="810" y="580">Flow</text><text x="950" y="580">Stop</text><text x="131" y="305">1.6</text><text x="271" y="348">48.0</text><text x="411" y="321">58.0</text><text x="551" y="305">54.8</text><text x="691" y="322">50.6</text><text x="831" y="305">46.6</text><text x="971" y="305">59.0</text></g>
+<text x="75" y="625" class="b">论文报告：Full Method = 59.0% / 8.5s；No Sync 仅 1.6% / 4.5s，说明周期性回到真实 rollout 很关键。</text>
+<text x="75" y="650" class="s">σ=0.5 的完整配置达到 59.0%；σ=0.0 为 54.8%，σ=1.0 降到 50.6%；不切断 state gradient 的 Flow 为 46.6%。</text>
+</svg>

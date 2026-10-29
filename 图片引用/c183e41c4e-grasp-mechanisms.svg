@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+<rect width="1200" height="760" fill="#fff"/><style>text{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#172033}.title{font-size:28px;font-weight:700}.h{font-size:21px;font-weight:700}.b{font-size:17px}.s{font-size:15px}.box{stroke:#334155;stroke-width:2;rx:14}.a{stroke:#475569;stroke-width:3;fill:none;marker-end:url(#m)}.note{fill:#f8fafc;stroke:#94a3b8;stroke-width:1.5;rx:12}</style><defs><marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#475569"/></marker></defs>
+<text x="40" y="48" class="title">GRASP 的四个关键机制：探索、稳梯度、对齐目标、回到真实 rollout</text>
+<rect x="45" y="100" width="245" height="170" class="box" fill="#dbeafe"/><text x="72" y="140" class="h">① 虚拟状态</text><text x="72" y="177" class="b">优化 s₁…sₜ₋₁ 与 a₀…aₜ₋₁</text><text x="72" y="207" class="b">把长链拆为局部约束：</text><text x="72" y="238" class="b">‖Fθ(sₜ,aₜ)−sₜ₊₁‖²</text>
+<rect x="340" y="100" width="245" height="170" class="box" fill="#fee2e2"/><text x="367" y="140" class="h">② stop-gradient</text><text x="367" y="177" class="b">用 s̄ₜ = stopgrad(sₜ)</text><text x="367" y="207" class="b">切断脆弱的 ∇sFθ</text><text x="367" y="238" class="b">保留较可靠的 ∇aFθ</text>
+<rect x="635" y="100" width="245" height="170" class="box" fill="#dcfce7"/><text x="662" y="140" class="h">③ 目标 shaping</text><text x="662" y="177" class="b">每一步都看向 g：</text><text x="662" y="207" class="b">γ‖Fθ(s̄ₜ,aₜ)−g‖²</text><text x="662" y="238" class="b">防止“只会自洽，不前进”</text>
+<rect x="930" y="100" width="225" height="170" class="box" fill="#ffedd5"/><text x="957" y="140" class="h">④ 状态加噪 + sync</text><text x="957" y="177" class="b">s←s−η∇sL+σξ</text><text x="957" y="207" class="b">跳出局部最优</text><text x="957" y="238" class="b">周期性真实 rollout 修正</text>
+<path d="M290 185H335" class="a"/><path d="M585 185H630" class="a"/><path d="M880 185H925" class="a"/>
+<rect x="90" y="350" width="1020" height="300" class="note"/><text x="125" y="395" class="h">一个优化循环（论文 Algorithm 1 的直观化）</text>
+<rect x="130" y="455" width="180" height="75" class="box" fill="#dbeafe"/><text x="165" y="500" class="b">初始化 ŝ, a</text>
+<rect x="385" y="455" width="180" height="75" class="box" fill="#ede9fe"/><text x="418" y="486" class="b">并行算 L</text><text x="418" y="512" class="s">动态 + 目标</text>
+<rect x="640" y="455" width="180" height="75" class="box" fill="#dcfce7"/><text x="667" y="486" class="b">更新 a, s</text><text x="667" y="512" class="s">s 加高斯噪声</text>
+<rect x="895" y="455" width="180" height="75" class="box" fill="#ffedd5"/><text x="922" y="486" class="b">若到 Ksync</text><text x="922" y="512" class="s">serial rollout + GD</text>
+<path d="M310 492H380" class="a"/><path d="M565 492H635" class="a"/><path d="M820 492H890" class="a"/><path d="M985 540V585H220V535" class="a"/>
+<text x="125" y="610" class="s">通俗理解：先把“整条路”拆成许多可同时调整的小路段；允许中间点轻微随机游走，但定期把动作序列重新放回真实模型中检查。</text>
+</svg>
