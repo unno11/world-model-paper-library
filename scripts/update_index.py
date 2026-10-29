@@ -43,7 +43,7 @@ def refresh():
         write_table(vp,venue,'该刊会在不同研究主题下的论文。来源与发表信息核对范围见各论文页。',items)
     vpage.write_text('\n'.join(vl)+'\n',encoding='utf-8')
     home=['# 世界模型论文与解析','','收录世界模型及其相关表示学习、规划、控制与评测研究，按研究主题和刊会组织，提供论文资料与中文解析。','',
-    '## 论文导航','','- [精读解析](00_%E5%AF%BC%E8%88%AA/%E7%B2%BE%E8%AF%BB%E8%A7%A3%E6%9E%90.md)：直接阅读方法、公式、实验与局限分析。','- [全部论文目录](00_%E5%AF%BC%E8%88%AA/%E5%85%A8%E9%83%A8%E8%AE%BA%E6%96%87.md)','- [按刊会查找](00_%E5%AF%BC%E8%88%AA/%E6%8C%89%E5%88%8A%E4%BC%9A%E6%9F%A5%E6%89%BE.md)','- [基础知识与方法谱系](基础知识与方法谱系/README.md)','- [引用与资料核对说明](SOURCES.md)','- [内容维护指南](CONTRIBUTING.md)','',
+    '## 论文导航','','- [精读解析](00_%E5%AF%BC%E8%88%AA/%E7%B2%BE%E8%AF%BB%E8%A7%A3%E6%9E%90.md)：直接阅读方法、公式、实验与局限分析。','- [全部论文目录](00_%E5%AF%BC%E8%88%AA/%E5%85%A8%E9%83%A8%E8%AE%BA%E6%96%87.md)','- [按刊会查找](00_%E5%AF%BC%E8%88%AA/%E6%8C%89%E5%88%8A%E4%BC%9A%E6%9F%A5%E6%89%BE.md)','- [具身智能基础](基础知识与方法谱系/具身智能基础/README.md)：10 篇专题导读与 58 篇分类笔记。','- [基础知识与方法谱系](基础知识与方法谱系/README.md)','- [引用与资料核对说明](SOURCES.md)','- [内容维护指南](CONTRIBUTING.md)','',
     '## 按研究主题查找','','| 研究主题 | 论文数 |','| --- | --- |']
     for topic,vs in sorted(groups.items()):
         items=[r for rs in vs.values() for r in rs]
@@ -60,7 +60,9 @@ def refresh():
     '欢迎通过 Issues 补充相关论文、讨论方法或指出资料错误。引用与版本信息见 [资料来源说明](SOURCES.md)，内容贡献方式见 [贡献指南](CONTRIBUTING.md)。']
     (ROOT/'README.md').write_text('\n'.join(home)+'\n',encoding='utf-8')
     basic=ROOT/'基础知识与方法谱系/README.md'
-    basic.write_text('\n'.join(['# 基础知识与方法谱系','',*[f'- [{p.stem}]({relative(p,basic)})' for p in sorted(basic.parent.rglob('*.md')) if p!=basic],'']),encoding='utf-8')
+    # Foundation navigation is curated separately from the paper catalog.
+    if not basic.exists():
+        basic.write_text('\n'.join(['# 基础知识与方法谱系','',*[f'- [{p.stem}]({relative(p,basic)})' for p in sorted(basic.parent.rglob('*.md')) if p!=basic],'']),encoding='utf-8')
     broken=[]
     for page in ROOT.rglob('*.md'):
         for t in re.findall(r'!?\[[^\]]*\]\(([^)]+)\)',page.read_text(encoding='utf-8')):

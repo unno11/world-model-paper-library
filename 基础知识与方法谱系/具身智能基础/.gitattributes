@@ -1,0 +1,2 @@
+# Preserve the source Markdown bytes when publishing existing notes.
+*.md -text

@@ -1,5 +1,11 @@
 # 基础知识与方法谱系
 
-- [jepa-wm数据流](jepa/jepa-wm%E6%95%B0%E6%8D%AE%E6%B5%81.md)
-- [JEPA-WM论文精读入口](jepa/JEPA-WM%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E5%85%A5%E5%8F%A3.md)
-- [入门](wam/%E5%85%A5%E9%97%A8.md)
+## 具身智能基础
+
+[进入基础知识目录](具身智能基础/README.md)：10 篇专题导读、58 篇分类笔记和 8 类主题。推荐路线为坐标变换 → 运动学 → 控制 → 世界模型 → 规划。
+
+## 方法谱系
+
+- [JEPA-WM 数据流](jepa/jepa-wm数据流.md)
+- [JEPA-WM 论文精读入口](jepa/JEPA-WM论文精读入口.md)
+- [世界动作模型入门](wam/入门.md)
