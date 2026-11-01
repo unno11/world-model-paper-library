@@ -4,7 +4,7 @@
 
 | 编号 | 论文 | 刊会 | 年份 | 精读解析 |
 | --- | --- | --- | --- | --- |
-| 2610.08780 | [DepthWorld: 3D World Model for Robot Manipulation](2610.08780%20DepthWorld%20%203D%20World%20Model%20for%20Robot%20Manipulation.md) | CoRL | 2026 | — |
+| 2610.08780 | [DepthWorld: 3D World Model for Robot Manipulation](2610.08780%20DepthWorld%20%203D%20World%20Model%20for%20Robot%20Manipulation.md) | CoRL | 2026 | [阅读全文](2610.08780%20DepthWorld%20%203D%20World%20Model%20for%20Robot%20Manipulation.md#论文解析) |
 | 2609.06009 | [How to Learn from What a Human Would Avoid? Intervention-Aware World Models with Real-World RL for Dexterous Manipulation](2609.06009%20How%20to%20Learn%20from%20What%20a%20Human%20Would%20Avoid%20%20Intervention-Aware%20World%20Models%20with%20Real-World%20RL%20.md) | CoRL | 2026 | — |
 | 2606.02486 | [Intercepting the Future: Latent-Space Predictive World Model for Dynamic VLA Manipulation](2606.02486%20Intercepting%20the%20Future%20%20Latent-Space%20Predictive%20World%20Model%20for%20Dynamic%20VLA%20Manipulation.md) | CoRL | 2026 | — |
 | 2505.11528 | [LaDi-WM: A Latent Diffusion-based World Model for Predictive Manipulation](2505.11528%20LaDi-WM%20%20A%20Latent%20Diffusion-based%20World%20Model%20for%20Predictive%20Manipulation.md) | CoRL | 2025 | — |
